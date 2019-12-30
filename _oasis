@@ -27,7 +27,7 @@ Library git
                      Store,
                      Memory, FS,
                      Version
-  BuildDepends:      mstruct, dolog, ocamlgraph, uri, lwt, hex, stringext, crc
+  BuildDepends:      mstruct, dolog, ocamlgraph, uri, lwt, hex, stringext, crc, ocplib-endian
 
 Library git_top
   Path:             lib/top
@@ -38,58 +38,7 @@ Library git_top
   XMETARequires:    git
   XMETADescription: Toplevel printers for Git values
 
-Library "git-http"
-  Build$:            flag(unix) || flag(mirage)
-  Path:              lib/http/
-  FindlibParent:     git
-  Findlibname:       http
-  Modules:           Git_http
-  BuildDepends:      git, lwt, cohttp.lwt, uri.services
-
-Library "git-unix"
-  Build$:            flag(unix)
-  Path:              lib/unix/
-  FindlibParent:     git
-  Findlibname:       unix
-  Modules:           Git_unix
-  BuildDepends:      git, git.http, lwt, cohttp.lwt, lwt.unix, conduit.lwt-unix,
-                     zip, nocrypto
-
-Library "git-mirage"
-  Build$:            flag(mirage)
-  Path:              lib/mirage/
-  FindlibParent:     git
-  Findlibname:       mirage
-  Modules:           Git_mirage
-  BuildDepends:      git, git.http, mirage-types.lwt, io-page, conduit.mirage,
-                     dns.mirage, mirage-http, mirage-flow, channel
-
-Executable ogit
-  Build$:           flag(unix)
-  Path:             bin/
-  MainIs:           ogit.ml
-  CompiledObject:   best
-  Install:          true
-  BuildDepends:     cmdliner, git, git.unix
-
-Executable test_git
-  Build$:           flag(tests) && flag(unix) && flag(mirage)
-  Path:             lib_test
-  MainIs:           test.ml
-  CompiledObject:   best
-  Install:          false
-  BuildDepends:     alcotest, git, git.unix, git.mirage,
-                    io-page.unix, mirage-fs-unix
-
 Test test_git
   Run$:             flag(tests) && flag(unix) && flag(mirage)
   Command:          $test_git -q
   WorkingDirectory: lib_test/
-
-Document git
-  Title:                Git docs
-  Type:                 OCamlbuild (0.4)
-  BuildTools+:          ocamldoc
-  Install:              true
-  XOCamlbuildPath:      lib
-  XOCamlbuildLibraries: git, git.unix, git.mirage
