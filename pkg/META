@@ -1,6 +1,6 @@
 description = "A low-level interface to Git in pure OCaml"
 version = "%%VERSION_NUM%%"
-requires = "mstruct logs ocamlgraph uri lwt hex astring fmt"
+requires = "mstruct logs ocamlgraph uri lwt hex astring fmt ocplib-endian"
 archive(byte) = "git.cma"
 archive(native) = "git.cmxa"
 plugin(byte) = "git.cma"

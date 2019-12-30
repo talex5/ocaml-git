@@ -1,7 +1,7 @@
 true: short_paths, safe_string, package(bytes)
 true: warn_error(+1..49+60), warn(A-4-41-44)
 
-true: package(cstruct astring fmt hex logs lwt ocamlgraph re uri mstruct)
+true: package(cstruct astring fmt hex logs lwt ocamlgraph re uri mstruct ocplib-endian)
 
 <test/*>: package(alcotest logs.fmt mtime.os nocrypto)
 <test/test_mirage.*>: package(mirage-fs-unix io-page.unix)
